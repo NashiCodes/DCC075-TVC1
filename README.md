@@ -1,15 +1,12 @@
 # DCC075 - TVC1
 
-Scripts para assinar (RSA-PSS/sha256) e criptografar arquivos (híbrido RSA-OAEP + AES-256-GCM), e para decifrar e
-verificar assinatura e hash.
-
 ## Requisitos
 
 - Node.js 16+ (ou superior)
 
 ## Como funciona (visão geral)
 
-- encrypt.js
+- `encrypt.js`
     - Gera par de chaves RSA (2048) em `src/inputs/` caso não exista: `private_key.pem`, `public_key.pem`.
     - Lê o arquivo em `src/inputs/<arquivo>`.
     - Calcula SHA-256 do conteúdo e assina o conteúdo com RSA-PSS (chave privada).
@@ -17,7 +14,7 @@ verificar assinatura e hash.
     - Encripta ("wrap") a chave AES com RSA-OAEP (chave pública).
     - Salva um envelope JSON em `src/outputs/<arquivo>.enc.json` contendo: cabeçalho (hash, iv, tag, wrappedKey, etc.),
       assinatura e ciphertext.
-- decrypt.js
+- `decrypt.js`
     - Lê o envelope JSON de `src/outputs/`.
     - Desencripta a chave AES com a chave privada (RSA-OAEP) e decifra o conteúdo (AES-GCM).
     - Verifica a assinatura (RSA-PSS) com a chave pública e compara o SHA-256 do plaintext com o `header.hash`.
@@ -43,11 +40,11 @@ node src/decrypt.js exemplo.enc.json
 
 Saída: `src/outputs/exemplo.txt` e logs de verificação:
 
-- Decrypted file written to: <PATH>
-- Signature verification: OK/FAILED
-- Hash in header: <HASH_VALUE>
-- Hash computed: <HASH_VALUE>
-- Hash verification: OK/FAILED
+- Decrypted file written to: `<PATH>`
+- Signature verification: `OK`/`FAILED`
+- Hash in header: `<HASH_VALUE>`
+- Hash computed: `<HASH_VALUE>`
+- Hash verification: `OK`/`FAILED`
 
 ## Observações
 
