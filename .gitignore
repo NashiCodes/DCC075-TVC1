@@ -27,10 +27,8 @@ build/
 .env
 .env.*
 
-# Project-specific: do not commit secrets or generated artifacts
 src/inputs/private_key.pem
+src/inputs/public_key.pem
 src/outputs/
 
-# Allow keeping the outputs folder but ignore its contents
-!src/outputs/.gitkeep
 
