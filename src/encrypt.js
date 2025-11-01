@@ -49,14 +49,12 @@ function extractFileNameWithoutExt(filePath) {
         process.exit(1);
     }
 
-    // Ensure RSA key pair exists in inputs/
     const {privateKeyPem, publicKeyPem} = ensureKeyPair(inputsDir);
 
     const plaintext = fs.readFileSync(inputPath);
     const hashHex = sha256(plaintext);
     const signatureB64 = signRSAPSS(privateKeyPem, plaintext);
 
-    // Hybrid encryption: generate random AES key, encrypt data with AES-GCM, wrap AES key with RSA-OAEP
     const aesKey = fs.randomBytes ? fs.randomBytes(32) : require('node:crypto').randomBytes(32);
     const {ciphertext, iv, tag} = encryptWithAesKey(plaintext, aesKey);
     const wrappedKey = rsaEncryptPublic(publicKeyPem, aesKey);
