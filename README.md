@@ -1,5 +1,7 @@
 # DCC075 - TVC1
 
+Integrante: João Victor Pereira - 202176010
+
 Sistema de criptografia híbrida (RSA-OAEP + AES-GCM) com assinatura (RSA-PSS) para arquivos em Node.js.
 
 ## Requisitos
